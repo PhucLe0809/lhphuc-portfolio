@@ -25,4 +25,3 @@ jobs:
         curl -X POST -H 'Content-type: application/json' \
         --data '{"text":"Issue closed and Pull Request merged successfully"}' \
         https://hooks.slack.com/services/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
-        
