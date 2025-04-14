@@ -1,0 +1,27 @@
+name: CI for Static Portfolio Project
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install HTML Tidy
+      run: sudo apt-get install -y tidy
+
+    - name: Validate HTML
+      run: |
+        tidy -errors -quiet index.html || true
+
+    - name: Notify Slack
+      if: github.event.pull_request.merged == true
+      run: |
+        curl -X POST -H 'Content-type: application/json' \
+        --data '{"text":"Issue closed and Pull Request merged successfully"}' \
+        https://hooks.slack.com/services/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
